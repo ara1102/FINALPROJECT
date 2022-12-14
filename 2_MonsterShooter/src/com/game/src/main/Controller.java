@@ -2,50 +2,78 @@ package com.game.src.main;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
 public class Controller {
 
-	private List<Entity> entities = new ArrayList<Entity>();
+	private LinkedList<EntityA> entitiesA = new LinkedList<EntityA>();
+	private LinkedList<EntityB> entitiesB = new LinkedList<EntityB>();
 	
-	Entity entity;
+	EntityA entityA;
+	EntityB entityB;
 	Random rand = new Random();
 	
 	public Controller() {
-	
-		addEntity(new Enemy(rand.nextInt((Main.WIDTH-Game.GRASS-Game.GRASS-64))+Game.GRASS, 0));
+		
+		addEntityB(new Enemy(rand.nextInt((Main.WIDTH-Game.GRASS-Game.GRASS-64))+Game.GRASS, 0,this));
 		
 	}
 	
 	public void tick() {
 		
-		 for(int i=0; i< entities.size(); i++) {
-			 entity = entities.get(i);
+		 for(int i=0; i< entitiesA.size(); i++) {
+			 entityA = entitiesA.get(i);
 			 
-			 if(entity.getY()<0) {
-				 removeEntity(entity);
-			 }
-			 
-			 entity.tick();
+			 entityA.tick();
 		 }
+		 
+		 for(int i=0; i< entitiesB.size(); i++) {
+			 entityB = entitiesB.get(i);
+			 
+			 entityB.tick();
+		 }
+		 
 	}
 	
 	public void render(Graphics g) {
 		
-		 for(int i=0; i< entities.size(); i++) {
+		 for(int i=0; i< entitiesA.size(); i++) {
 			 
-			 entity = entities.get(i);
-			 entity.render(g);
+			 entityA = entitiesA.get(i);
+			 entityA.render(g);
 		 }
+		 
+			for (int i = 0; i < entitiesB.size(); i++) {
+
+				entityB = entitiesB.get(i);
+				entityB.render(g);
+			}
+		}
+	
+	public void addEntityA(EntityA e) {
+		entitiesA.add(e);
 	}
 	
-	public void addEntity(Entity e) {
-		entities.add(e);
+	public void removeEntityA(EntityA e) {
+		entitiesA.remove(e);
 	}
 	
-	public void removeEntity(Entity e) {
-		entities.remove(e);
+	public void addEntityB(EntityB e) {
+		entitiesB.add(e);
+	}
+	
+	public void removeEntityB(EntityB e) {
+		entitiesB.remove(e);
+	}
+	
+	public LinkedList<EntityA> getEntitiesA(){
+		return entitiesA;	
+	}
+	
+	public LinkedList<EntityB> getEntitiesB(){
+		return entitiesB;	
 	}
 }
 	

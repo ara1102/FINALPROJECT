@@ -1,15 +1,14 @@
 package com.game.src.main;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class Tank implements Entity{
+public class Tank extends GameObject implements EntityA{
 	
-	private double x;
-	private double y;
 	private BufferedImage tankImg;
 	private String tankPath = "/tankcrop.png"; 
 	
@@ -19,9 +18,7 @@ public class Tank implements Entity{
 	//
 	public Tank(double x, double y) {
 		
-		this.x = x;
-		this.y = y;
-		
+		super(x, y);
 		//untuk ngeload gambar dari path
 		BufferedImageLoader loader = new BufferedImageLoader();
 		tankImg = loader.loadImage(tankPath);
@@ -76,5 +73,9 @@ public class Tank implements Entity{
 	
 	public void setvy(double vy) {
 		this.vy  = vy;
+	}
+	
+	public Rectangle getBounds() {
+		return new Rectangle((int)x,(int)y, tankImg.getWidth(),tankImg.getHeight());
 	}
 }

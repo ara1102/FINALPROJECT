@@ -35,7 +35,7 @@ public class KeyboardPanel implements KeyListener{
 			
 		}else if(key == KeyEvent.VK_SPACE && !fire) {
 			fire = true;
-			controller.addEntity(new Bullet(tank.getX(), tank.getY()));
+			controller.addEntityA(new Bullet(tank.getX(), tank.getY(), controller));
 		}
 	}
 

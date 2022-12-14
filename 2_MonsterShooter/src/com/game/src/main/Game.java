@@ -7,6 +7,8 @@ import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+import java.util.IllegalFormatCodePointException;
+import java.util.LinkedList;
 
 import javax.swing.JFrame;
 
@@ -22,6 +24,14 @@ public class Game extends Canvas implements Runnable{
 	public static final int GRASS = 70;
 	private BufferedImage backImg = null;
 	private String backPath = "/Arena.jpg";
+	
+//	private enum STATE{
+//		MENU,
+//		GAME,
+//		CLOSE
+//	};
+//	
+//	private STATE state = STATE.MENU;
 	
 	public void init() {
 		
@@ -103,8 +113,12 @@ public class Game extends Canvas implements Runnable{
 	
 	private void tick() {
 		
-		tank.tick();
-		controller.tick();
+		//if(state == STATE.GAME) {
+			tank.tick();
+			controller.tick();
+		//}
+		
+		
 	}
 	
 	private void render() {
@@ -121,8 +135,11 @@ public class Game extends Canvas implements Runnable{
 		
 		g.drawImage(backImg, 0, 0, null);
 		
-		tank.render(g);
-		controller.render(g);
+		//if(state == STATE.GAME) {
+			tank.render(g);
+			controller.render(g);
+		//}
+		
 		
 		/////////////////////////////////
 		g.dispose();

@@ -1,37 +1,38 @@
 package com.game.src.main;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
 import javax.swing.tree.FixedHeightLayoutCache;
 
-public class Enemy implements Entity {
+public class Enemy extends GameObject implements EntityB {
 
-	private double x, y;
 	private BufferedImage enemyImg;
 	private String enemyPath = "/spritesheet.png";
-	private int width;
-	private int height;
 	private Random rand = new Random();
+	private Controller controller;
 	
-	public Enemy(double x, double y) {
-		this.x = x;
-		this.y = y;
+	public Enemy(double x, double y, Controller controller) {
+		super(x, y);
+		this.controller=controller;
 		
 		BufferedImageLoader loader = new BufferedImageLoader();
 		enemyImg = loader.loadImage(enemyPath, 87 ,253 , 58,64);
-		
-		width = enemyImg.getWidth();
-		height= enemyImg.getHeight();
+
 	}
 	
 	public void tick() {
-		y += 20;
+		y += 1;
 		
 		if(y > Main.HEIGHT) {
 			y = 0;
 			x = rand.nextInt(Main.WIDTH-Game.GRASS-Game.GRASS-64)+Game.GRASS;
+		}
+		
+		if(Physics.Collision(this, controller.getEntitiesA())) {
+			controller.removeEntityB(this);
 		}
 	}
 	
@@ -43,16 +44,13 @@ public class Enemy implements Entity {
 		return y;
 	}
 
-	public int getHeight() {
-		return height;
-	}
-	
-	public int getWidth() {
-		return width;
-	}
-
 	@Override
 	public double getX() {
 		return x;
 	}
+	
+	public Rectangle getBounds() {
+		return new Rectangle((int)x,(int)y, enemyImg.getWidth(),enemyImg.getHeight());
+	}
+
 }

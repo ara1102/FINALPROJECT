@@ -1,22 +1,19 @@
 package com.game.src.main;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
-
-public class Bullet implements Entity{
+public class Bullet extends GameObject implements EntityA{
 	
-	private double x;
-	private double y;
 	private BufferedImage bulletImg;
 	private String bulletPath = "/shotRed.png"; 
+	private Controller controller;
 
-	public Bullet(double x, double y) {
+	public Bullet(double x, double y, Controller controller) {
 		
-		this.x = x+20;
-		this.y = y-21;
+		super(x+20,y-21);
+		this.controller = controller;
 		
 		BufferedImageLoader loader = new BufferedImageLoader();
 		bulletImg = loader.loadImage(bulletPath);
@@ -25,6 +22,10 @@ public class Bullet implements Entity{
 	
 	public void tick() {
 		y -= 10;
+		
+		if(Physics.Collision(this, controller.getEntitiesB())) {
+			System.out.println("collision");
+		}
 	}
 	
 	public void render(Graphics g) {
@@ -35,9 +36,12 @@ public class Bullet implements Entity{
 		return y;
 	}
 
-	@Override
 	public double getX() {
 		return x;
+	}
+	
+	public Rectangle getBounds() {
+		return new Rectangle((int)x,(int)y, bulletImg.getWidth(), bulletImg.getHeight());
 	}
 }
 
