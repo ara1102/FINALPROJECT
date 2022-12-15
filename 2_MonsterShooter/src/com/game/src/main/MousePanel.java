@@ -1,22 +1,19 @@
 package com.game.src.main;
 
-import java.awt.Rectangle;
+
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import com.game.src.main.Game.STATE;
 
 public class MousePanel implements MouseListener {
-
-	//public Rectangle playButton = new Rectangle(150,150,200,100);
-	//public Rectangle helpButton = new Rectangle(150,300,200,100);
-	//public Rectangle quitButton = new Rectangle(150,450,200,100);
 	
 	private Menu menu;
 	private Difficulty difficulty;
+	private Controller controller;
 	
-	public MousePanel(Menu menu, Difficulty difficulty) {
+	public MousePanel(Menu menu, Difficulty difficulty, Controller controller) {
 		this.menu = menu;
 		this.difficulty = difficulty;
+		this.controller = controller;
 	}
 	
 	@Override
@@ -59,6 +56,7 @@ public class MousePanel implements MouseListener {
 					System.out.println("EASY BUTTON");
 					Game.state = Game.state.GAME;
 					Game.diff = Game.diff.EASY;
+					controller.start();
 				}
 			}
 
@@ -67,6 +65,7 @@ public class MousePanel implements MouseListener {
 					System.out.println("MEDIUM BUTTON");
 					Game.state = Game.state.GAME;
 					Game.diff = Game.diff.MEDIUM;
+					controller.start();
 				}
 			}
 
@@ -75,6 +74,7 @@ public class MousePanel implements MouseListener {
 					System.out.println("HARD BUTTON");
 					Game.state = Game.state.GAME;
 					Game.diff = Game.diff.HARD;
+					controller.start();
 				}
 			}
 		}

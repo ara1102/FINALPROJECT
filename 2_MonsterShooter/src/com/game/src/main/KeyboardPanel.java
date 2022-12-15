@@ -9,19 +9,17 @@ public class KeyboardPanel implements KeyListener{
 
 	Tank tank;
 	Controller controller;
-	Game game;
 	boolean fire = false; 
 	
-	public KeyboardPanel(Tank tank, Controller controller, Game game) {
+	public KeyboardPanel(Tank tank, Controller controller) {
 		this.tank = tank;
 		this.controller = controller;
-		this.game= game;
 	}
 
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
 		
-		if (game.state == STATE.GAME) {
+		if (Game.state == STATE.GAME) {
 			if (key == KeyEvent.VK_RIGHT) {
 
 				tank.setvx(5);
@@ -48,7 +46,7 @@ public class KeyboardPanel implements KeyListener{
 	public void keyReleased(KeyEvent e) {
 		int key = e.getKeyCode();
 
-		if (game.state == STATE.GAME) {
+		if (Game.state == STATE.GAME) {
 			if (key == KeyEvent.VK_RIGHT) {
 
 				tank.setvx(0);

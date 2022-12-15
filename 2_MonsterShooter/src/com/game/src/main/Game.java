@@ -17,7 +17,6 @@ public class Game extends Canvas implements Runnable{
 	private boolean running = false;
 	private Thread thread;
 	
-	private Tank tank;
 	private Controller controller;
 	private Menu menu;
 	private Difficulty difficulty;
@@ -48,14 +47,13 @@ public class Game extends Canvas implements Runnable{
 		BufferedImageLoader loader = new BufferedImageLoader();
 		backImg = loader.loadImage(backPath);
 		
-		controller = new Controller();
-		tank = new Tank(218, 300,controller);
 		menu = new Menu();
 		difficulty = new Difficulty();
+		controller = new Controller();
 		
 		requestFocus();
-		addKeyListener(new KeyboardPanel(tank,controller,this));
-		addMouseListener(new MousePanel(menu,difficulty));
+		addKeyListener(new KeyboardPanel(controller.getTank(),controller));
+		addMouseListener(new MousePanel(menu,difficulty,controller));
 		
 	}
 	
@@ -127,8 +125,6 @@ public class Game extends Canvas implements Runnable{
 	private void tick() {
 		
 		if(state == STATE.GAME && diff != DIFFICULTY.BASE) {
-			//difficulty.tick();
-			tank.tick();
 			controller.tick();
 		}else if(state == STATE.MENU) {
 			//menu.tick();
@@ -156,7 +152,6 @@ public class Game extends Canvas implements Runnable{
 		}else if(state == STATE.MENU) {
 			menu.render(g);
 		}else if(state == STATE.GAME) {
-			tank.render(g);
 			controller.render(g);
 		}
 		

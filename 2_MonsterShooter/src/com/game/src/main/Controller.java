@@ -6,10 +6,13 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-public class Controller {
+import javax.swing.JPanel;
+
+public class Controller extends JPanel {
 
 	private LinkedList<EntityA> entitiesA = new LinkedList<EntityA>();
 	private LinkedList<EntityB> entitiesB = new LinkedList<EntityB>();
+	private Tank tank= new Tank(218, 300,this);;
 	
 	EntityA entityA;
 	EntityB entityB;
@@ -17,11 +20,11 @@ public class Controller {
 	
 	public Controller() {
 		
-		addEntity(new Enemy(rand.nextInt((Main.WIDTH-Game.GRASS-Game.GRASS-64))+Game.GRASS, 0,this));
-		
 	}
 	
 	public void tick() {
+		
+		tank.tick();
 		
 		 for(int i=0; i< entitiesA.size(); i++) {
 			 entityA = entitiesA.get(i);
@@ -38,6 +41,8 @@ public class Controller {
 	}
 	
 	public void render(Graphics g) {
+		
+		tank.render(g);
 		
 		 for(int i=0; i< entitiesA.size(); i++) {
 			 
@@ -82,6 +87,29 @@ public class Controller {
 	
 	public int getEntitiesBSize(){
 		return entitiesB.size();	
+	}
+	
+	public void start() {
+		
+		if(Game.diff == Game.diff.EASY) {
+			
+			addEntity(new Enemy(rand.nextInt((Main.WIDTH-Game.GRASS-Game.GRASS-64))+Game.GRASS, 0,this));
+			
+		}else if(Game.diff == Game.diff.MEDIUM) {
+			
+			addEntity(new Enemy(rand.nextInt((Main.WIDTH-Game.GRASS-Game.GRASS-64))+Game.GRASS, 0,this));
+			
+		}else if(Game.diff == Game.diff.HARD) {
+			
+			addEntity(new Enemy(rand.nextInt((Main.WIDTH-Game.GRASS-Game.GRASS-64))+Game.GRASS, 0,this));
+			
+		}
+		
+	}
+	
+	public Tank getTank() {
+		return tank;
+		
 	}
 }
 	

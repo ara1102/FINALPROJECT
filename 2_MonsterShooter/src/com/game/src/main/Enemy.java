@@ -19,8 +19,14 @@ public class Enemy extends GameObject implements EntityB {
 		this.controller=controller;
 		
 		BufferedImageLoader loader = new BufferedImageLoader();
-		enemyImg = loader.loadImage(enemyPath, 87 ,253 , 58,64);
-
+		
+		if(Game.diff == Game.diff.EASY) {
+			enemyImg = loader.loadImage(enemyPath, 87 ,253 , 58,64);
+		}else if(Game.diff == Game.diff.MEDIUM) {
+			enemyImg = loader.loadImage(enemyPath, 255 ,170 , 58,64);
+		}else if(Game.diff == Game.diff.HARD) {
+			enemyImg = loader.loadImage(enemyPath, 507 ,170 , 58,64);
+		}
 	}
 	
 	public void tick() {
