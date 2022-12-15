@@ -17,7 +17,7 @@ public class Controller {
 	
 	public Controller() {
 		
-		addEntityB(new Enemy(rand.nextInt((Main.WIDTH-Game.GRASS-Game.GRASS-64))+Game.GRASS, 0,this));
+		addEntity(new Enemy(rand.nextInt((Main.WIDTH-Game.GRASS-Game.GRASS-64))+Game.GRASS, 0,this));
 		
 	}
 	
@@ -52,19 +52,19 @@ public class Controller {
 			}
 		}
 	
-	public void addEntityA(EntityA e) {
+	public void addEntity(EntityA e) {
 		entitiesA.add(e);
 	}
 	
-	public void removeEntityA(EntityA e) {
+	public void removeEntity(EntityA e) {
 		entitiesA.remove(e);
 	}
 	
-	public void addEntityB(EntityB e) {
+	public void addEntity(EntityB e) {
 		entitiesB.add(e);
 	}
 	
-	public void removeEntityB(EntityB e) {
+	public void removeEntity(EntityB e) {
 		entitiesB.remove(e);
 	}
 	
@@ -74,6 +74,14 @@ public class Controller {
 	
 	public LinkedList<EntityB> getEntitiesB(){
 		return entitiesB;	
+	}
+	
+	public int getEntitiesASize(){
+		return entitiesA.size();	
+	}
+	
+	public int getEntitiesBSize(){
+		return entitiesB.size();	
 	}
 }
 	

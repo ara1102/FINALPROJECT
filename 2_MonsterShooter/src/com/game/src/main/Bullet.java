@@ -23,8 +23,10 @@ public class Bullet extends GameObject implements EntityA{
 	public void tick() {
 		y -= 10;
 		
-		if(Physics.Collision(this, controller.getEntitiesB())) {
-			System.out.println("collision");
+		for(int i=0; i< controller.getEntitiesBSize(); i++) {
+			if(Physics.Collision(this, controller.getEntitiesB().get(i))) {
+				System.out.println("collision");
+			}
 		}
 	}
 	

@@ -19,30 +19,43 @@ public class Game extends Canvas implements Runnable{
 	
 	private Tank tank;
 	private Controller controller;
+	private Menu menu;
+	private Difficulty difficulty;
 	
 	//Grass right-left area size : 70px each 
 	public static final int GRASS = 70;
 	private BufferedImage backImg = null;
 	private String backPath = "/Arena.jpg";
 	
-//	private enum STATE{
-//		MENU,
-//		GAME,
-//		CLOSE
-//	};
-//	
-//	private STATE state = STATE.MENU;
+	public static enum STATE{
+		MENU,
+		GAME,
+		DIFF
+	};
+	
+	public static enum DIFFICULTY{
+		BASE,
+		EASY,
+		MEDIUM,
+		HARD
+	};
+	
+	public static STATE state = STATE.MENU;
+	public static DIFFICULTY diff = DIFFICULTY.BASE;
 	
 	public void init() {
 		
 		BufferedImageLoader loader = new BufferedImageLoader();
 		backImg = loader.loadImage(backPath);
 		
-		tank = new Tank(218, 300);
 		controller = new Controller();
+		tank = new Tank(218, 300,controller);
+		menu = new Menu();
+		difficulty = new Difficulty();
 		
 		requestFocus();
-		addKeyListener(new KeyboardPanel(tank,controller));
+		addKeyListener(new KeyboardPanel(tank,controller,this));
+		addMouseListener(new MousePanel(menu,difficulty));
 		
 	}
 	
@@ -113,10 +126,13 @@ public class Game extends Canvas implements Runnable{
 	
 	private void tick() {
 		
-		//if(state == STATE.GAME) {
+		if(state == STATE.GAME && diff != DIFFICULTY.BASE) {
+			//difficulty.tick();
 			tank.tick();
 			controller.tick();
-		//}
+		}else if(state == STATE.MENU) {
+			//menu.tick();
+		}
 		
 		
 	}
@@ -135,10 +151,14 @@ public class Game extends Canvas implements Runnable{
 		
 		g.drawImage(backImg, 0, 0, null);
 		
-		//if(state == STATE.GAME) {
+		if(state == STATE.DIFF) {
+			difficulty.render(g);
+		}else if(state == STATE.MENU) {
+			menu.render(g);
+		}else if(state == STATE.GAME) {
 			tank.render(g);
 			controller.render(g);
-		//}
+		}
 		
 		
 		/////////////////////////////////

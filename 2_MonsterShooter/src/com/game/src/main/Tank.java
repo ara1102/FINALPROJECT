@@ -11,14 +11,17 @@ public class Tank extends GameObject implements EntityA{
 	
 	private BufferedImage tankImg;
 	private String tankPath = "/tankcrop.png"; 
+	private Controller controller;
 	
 	private double vx = 0;
 	private double vy = 0;
+	private int health = 100;
 	
 	//
-	public Tank(double x, double y) {
+	public Tank(double x, double y, Controller controller) {
 		
 		super(x, y);
+		this.controller = controller;
 		//untuk ngeload gambar dari path
 		BufferedImageLoader loader = new BufferedImageLoader();
 		tankImg = loader.loadImage(tankPath);
@@ -44,6 +47,16 @@ public class Tank extends GameObject implements EntityA{
 		
 		if( y >= Main.HEIGHT - tankImg.getHeight()) {
 			y = Main.HEIGHT - tankImg.getHeight();
+		}
+		
+		for(int i = 0; i<controller.getEntitiesBSize();i++) {
+			EntityB tempEntityB = controller.getEntitiesB().get(i);
+			
+			if(Physics.Collision(this, tempEntityB)) {
+				controller.removeEntity(tempEntityB);
+				health -= 10;
+				System.out.println("Health "+ health);
+			}
 		}
 	}
 	

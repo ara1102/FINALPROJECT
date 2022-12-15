@@ -31,9 +31,15 @@ public class Enemy extends GameObject implements EntityB {
 			x = rand.nextInt(Main.WIDTH-Game.GRASS-Game.GRASS-64)+Game.GRASS;
 		}
 		
-		if(Physics.Collision(this, controller.getEntitiesA())) {
-			controller.removeEntityB(this);
+		for(int i=0; i< controller.getEntitiesASize(); i++){
+			EntityA tempEntityA = controller.getEntitiesA().get(i);
+			
+			if(Physics.Collision(this, tempEntityA)) {
+				controller.removeEntity(tempEntityA);
+				controller.removeEntity(this);
+			}
 		}
+
 	}
 	
 	public void render(Graphics g) {
