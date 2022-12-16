@@ -34,7 +34,7 @@ public class Controller extends JPanel {
 
 	public void tick() {
 
-		if (tank.getHealth() == 0) {
+		if (tank.getHealth() <= 0) {
 			Game.state = STATE.GAMEOVER;
 		}
 		
@@ -157,6 +157,11 @@ public class Controller extends JPanel {
 		this.enemy_killed=0;
 		tank.reset();
 
+	}
+	
+	public void pause() {
+		tank.setvx(0);
+		tank.setvy(0);
 	}
 
 	public Tank getTank() {
