@@ -4,6 +4,7 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Window;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
@@ -20,16 +21,21 @@ public class Game extends Canvas implements Runnable{
 	private Controller controller;
 	private Menu menu;
 	private Difficulty difficulty;
+	private GameOver gameOver;
+	private Win win;
 	
 	//Grass right-left area size : 70px each 
 	public static final int GRASS = 70;
 	private BufferedImage backImg = null;
-	private String backPath = "/Arena.jpg";
+	//private String backPath = "/Arena.jpg";
+	private String backPath = "/Untitled design.png";
 	
 	public static enum STATE{
 		MENU,
 		GAME,
-		DIFF
+		DIFF,
+		GAMEOVER,
+		WIN
 	};
 	
 	public static enum DIFFICULTY{
@@ -49,11 +55,14 @@ public class Game extends Canvas implements Runnable{
 		
 		menu = new Menu();
 		difficulty = new Difficulty();
+		gameOver = new GameOver();
+		win = new Win();
+		
 		controller = new Controller();
 		
 		requestFocus();
 		addKeyListener(new KeyboardPanel(controller.getTank(),controller));
-		addMouseListener(new MousePanel(menu,difficulty,controller));
+		addMouseListener(new MousePanel(menu,difficulty,gameOver,win,controller));
 		
 	}
 	
@@ -153,6 +162,10 @@ public class Game extends Canvas implements Runnable{
 			menu.render(g);
 		}else if(state == STATE.GAME) {
 			controller.render(g);
+		}else if(state == STATE.GAMEOVER) {
+			gameOver.render(g);
+		}else if(state == STATE.WIN) {
+			win.render(g);
 		}
 		
 		

@@ -8,12 +8,16 @@ public class MousePanel implements MouseListener {
 	
 	private Menu menu;
 	private Difficulty difficulty;
+	private GameOver gameOver;
 	private Controller controller;
+	private Win win;
 	
-	public MousePanel(Menu menu, Difficulty difficulty, Controller controller) {
+	public MousePanel(Menu menu, Difficulty difficulty, GameOver gameOver,Win win, Controller controller) {
 		this.menu = menu;
 		this.difficulty = difficulty;
+		this.gameOver = gameOver;
 		this.controller = controller;
+		this.win = win;
 	}
 	
 	@Override
@@ -75,6 +79,47 @@ public class MousePanel implements MouseListener {
 					Game.state = Game.state.GAME;
 					Game.diff = Game.diff.HARD;
 					controller.start();
+				}
+			}
+		}else if (Game.state == Game.state.GAMEOVER) {
+			if (px >= gameOver.tryAgainButton.getMinX() && px <= gameOver.tryAgainButton.getMaxX()) {
+				if (py >= gameOver.tryAgainButton.getMinY() && py <= gameOver.tryAgainButton.getMaxY()) {
+					System.out.println("TRY AGAIN BUTTON");
+					Game.state = Game.state.GAME;
+					controller.reset();
+					controller.start();
+				}
+			}
+
+			if (px >= gameOver.menuButton.getMinX() && px <= gameOver.menuButton.getMaxX()) {
+				if (py >= gameOver.menuButton.getMinY() && py <= gameOver.menuButton.getMaxY()) {
+					System.out.println("MENU BUTTON");
+					Game.state = Game.state.MENU;
+					Game.diff = Game.diff.BASE;
+					controller.reset();
+				}
+			}
+
+			if (px >= gameOver.quitButton.getMinX() && px <= gameOver.quitButton.getMaxX()) {
+				if (py >= gameOver.quitButton.getMinY() && py <= gameOver.quitButton.getMaxY()) {
+					System.out.println("QUIT BUTTON");
+					System.exit(1);
+				}
+			}
+		}else if (Game.state == Game.state.WIN) {
+			if (px >= win.menuButton.getMinX() && px <= win.menuButton.getMaxX()) {
+				if (py >= win.menuButton.getMinY() && py <= win.menuButton.getMaxY()) {
+					System.out.println("MENU BUTTON");
+					Game.state = Game.state.MENU;
+					Game.diff = Game.diff.BASE;
+					controller.reset();
+				}
+			}
+
+			if (px >= win.quitButton.getMinX() && px <= win.quitButton.getMaxX()) {
+				if (py >= win.quitButton.getMinY() && py <= win.quitButton.getMaxY()) {
+					System.out.println("QUIT BUTTON");
+					System.exit(1);
 				}
 			}
 		}

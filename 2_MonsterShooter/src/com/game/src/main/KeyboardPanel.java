@@ -17,9 +17,11 @@ public class KeyboardPanel implements KeyListener{
 	}
 
 	public void keyPressed(KeyEvent e) {
-		int key = e.getKeyCode();
+		
 		
 		if (Game.state == STATE.GAME) {
+			int key = e.getKeyCode();
+			
 			if (key == KeyEvent.VK_RIGHT) {
 
 				tank.setvx(5);
@@ -44,9 +46,11 @@ public class KeyboardPanel implements KeyListener{
 	}
 
 	public void keyReleased(KeyEvent e) {
-		int key = e.getKeyCode();
+		
 
 		if (Game.state == STATE.GAME) {
+			int key = e.getKeyCode();
+			
 			if (key == KeyEvent.VK_RIGHT) {
 
 				tank.setvx(0);

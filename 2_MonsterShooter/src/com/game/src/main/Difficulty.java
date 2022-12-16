@@ -17,7 +17,7 @@ public class Difficulty {
 		Font font = new Font("arial", Font.BOLD,50);
 		g.setFont(font);
 		g.setColor(Color.white);
-		g.drawString("Select Difficulty", 50, 100);
+		g.drawString("Select Difficulty", 60, 100);
 		(g2d).draw(easyButton);
 		(g2d).draw(mediumButton);
 		(g2d).draw(hardButton);
