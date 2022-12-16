@@ -4,6 +4,9 @@ package com.game.src.main;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import com.game.src.main.Game.DIFFICULTY;
+import com.game.src.main.Game.STATE;
+
 public class MousePanel implements MouseListener {
 	
 	private Menu menu;
@@ -11,13 +14,15 @@ public class MousePanel implements MouseListener {
 	private GameOver gameOver;
 	private Controller controller;
 	private Win win;
+	private Pause pause;
 	
-	public MousePanel(Menu menu, Difficulty difficulty, GameOver gameOver,Win win, Controller controller) {
+	public MousePanel(Menu menu, Difficulty difficulty, GameOver gameOver,Win win, Pause pause, Controller controller) {
 		this.menu = menu;
 		this.difficulty = difficulty;
 		this.gameOver = gameOver;
 		this.controller = controller;
 		this.win = win;
+		this.pause = pause;
 	}
 	
 	@Override
@@ -32,11 +37,11 @@ public class MousePanel implements MouseListener {
 		int px = e.getX();
 		int py = e.getY();
 		
-		if (Game.state == Game.state.MENU) {
+		if (Game.state == STATE.MENU) {
 			if (px >= menu.playButton.getMinX() && px <= menu.playButton.getMaxX()) {
 				if (py >= menu.playButton.getMinY() && py <= menu.playButton.getMaxY()) {
 					System.out.println("PLAY BUTTON");
-					Game.state = Game.state.DIFF;
+					Game.state = STATE.DIFF;
 				}
 			}
 
@@ -54,12 +59,12 @@ public class MousePanel implements MouseListener {
 					System.exit(1);
 				}
 			}
-		}else if (Game.state == Game.state.DIFF) {
+		}else if (Game.state == STATE.DIFF) {
 			if (px >= difficulty.easyButton.getMinX() && px <= difficulty.easyButton.getMaxX()) {
 				if (py >= difficulty.easyButton.getMinY() && py <= difficulty.easyButton.getMaxY()) {
 					System.out.println("EASY BUTTON");
-					Game.state = Game.state.GAME;
-					Game.diff = Game.diff.EASY;
+					Game.state = STATE.GAME;
+					Game.diff = DIFFICULTY.EASY;
 					controller.start();
 				}
 			}
@@ -67,8 +72,8 @@ public class MousePanel implements MouseListener {
 			if (px >= difficulty.mediumButton.getMinX() && px <= difficulty.mediumButton.getMaxX()) {
 				if (py >= difficulty.mediumButton.getMinY() && py <= difficulty.mediumButton.getMaxY()) {
 					System.out.println("MEDIUM BUTTON");
-					Game.state = Game.state.GAME;
-					Game.diff = Game.diff.MEDIUM;
+					Game.state = STATE.GAME;
+					Game.diff = DIFFICULTY.MEDIUM;
 					controller.start();
 				}
 			}
@@ -76,16 +81,16 @@ public class MousePanel implements MouseListener {
 			if (px >= difficulty.hardButton.getMinX() && px <= difficulty.hardButton.getMaxX()) {
 				if (py >= difficulty.hardButton.getMinY() && py <= difficulty.hardButton.getMaxY()) {
 					System.out.println("HARD BUTTON");
-					Game.state = Game.state.GAME;
-					Game.diff = Game.diff.HARD;
+					Game.state = STATE.GAME;
+					Game.diff = DIFFICULTY.HARD;
 					controller.start();
 				}
 			}
-		}else if (Game.state == Game.state.GAMEOVER) {
+		}else if (Game.state == STATE.GAMEOVER) {
 			if (px >= gameOver.tryAgainButton.getMinX() && px <= gameOver.tryAgainButton.getMaxX()) {
 				if (py >= gameOver.tryAgainButton.getMinY() && py <= gameOver.tryAgainButton.getMaxY()) {
 					System.out.println("TRY AGAIN BUTTON");
-					Game.state = Game.state.GAME;
+					Game.state = STATE.GAME;
 					controller.reset();
 					controller.start();
 				}
@@ -94,8 +99,8 @@ public class MousePanel implements MouseListener {
 			if (px >= gameOver.menuButton.getMinX() && px <= gameOver.menuButton.getMaxX()) {
 				if (py >= gameOver.menuButton.getMinY() && py <= gameOver.menuButton.getMaxY()) {
 					System.out.println("MENU BUTTON");
-					Game.state = Game.state.MENU;
-					Game.diff = Game.diff.BASE;
+					Game.state = STATE.MENU;
+					Game.diff = DIFFICULTY.BASE;
 					controller.reset();
 				}
 			}
@@ -106,12 +111,12 @@ public class MousePanel implements MouseListener {
 					System.exit(1);
 				}
 			}
-		}else if (Game.state == Game.state.WIN) {
+		}else if (Game.state == STATE.WIN) {
 			if (px >= win.menuButton.getMinX() && px <= win.menuButton.getMaxX()) {
 				if (py >= win.menuButton.getMinY() && py <= win.menuButton.getMaxY()) {
 					System.out.println("MENU BUTTON");
-					Game.state = Game.state.MENU;
-					Game.diff = Game.diff.BASE;
+					Game.state = STATE.MENU;
+					Game.diff = DIFFICULTY.BASE;
 					controller.reset();
 				}
 			}
@@ -120,6 +125,31 @@ public class MousePanel implements MouseListener {
 				if (py >= win.quitButton.getMinY() && py <= win.quitButton.getMaxY()) {
 					System.out.println("QUIT BUTTON");
 					System.exit(1);
+				}
+			}
+		}else if (Game.state == STATE.PAUSE) {
+			if (px >= pause.continueButton.getMinX() && px <= pause.continueButton.getMaxX()) {
+				if (py >= pause.continueButton.getMinY() && py <= pause.continueButton.getMaxY()) {
+					System.out.println("CONTINUE BUTTON");
+					Game.state = STATE.GAME;
+				}
+			}
+
+			if (px >= pause.helpButton.getMinX() && px <= pause.helpButton.getMaxX()) {
+				if (py >= pause.helpButton.getMinY() && py <= pause.helpButton.getMaxY()) {
+					System.out.println("Help BUTTON");
+					Game.state = STATE.MENU;
+					Game.diff = DIFFICULTY.BASE;
+					controller.reset();
+				}
+			}
+
+			if (px >= pause.menuButton.getMinX() && px <= pause.menuButton.getMaxX()) {
+				if (py >= pause.menuButton.getMinY() && py <= pause.menuButton.getMaxY()) {
+					System.out.println("QUIT BUTTON");
+					Game.state = STATE.MENU;
+					Game.diff = DIFFICULTY.BASE;
+					controller.reset();
 				}
 			}
 		}

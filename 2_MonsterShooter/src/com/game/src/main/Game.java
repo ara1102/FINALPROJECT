@@ -23,6 +23,7 @@ public class Game extends Canvas implements Runnable{
 	private Difficulty difficulty;
 	private GameOver gameOver;
 	private Win win;
+	private Pause pause;
 	
 	//Grass right-left area size : 70px each 
 	public static final int GRASS = 70;
@@ -35,7 +36,8 @@ public class Game extends Canvas implements Runnable{
 		GAME,
 		DIFF,
 		GAMEOVER,
-		WIN
+		WIN,
+		PAUSE
 	};
 	
 	public static enum DIFFICULTY{
@@ -57,12 +59,13 @@ public class Game extends Canvas implements Runnable{
 		difficulty = new Difficulty();
 		gameOver = new GameOver();
 		win = new Win();
+		pause = new Pause();
 		
 		controller = new Controller();
 		
 		requestFocus();
 		addKeyListener(new KeyboardPanel(controller.getTank(),controller));
-		addMouseListener(new MousePanel(menu,difficulty,gameOver,win,controller));
+		addMouseListener(new MousePanel(menu,difficulty,gameOver,win,pause,controller));
 		
 	}
 	
@@ -166,6 +169,8 @@ public class Game extends Canvas implements Runnable{
 			gameOver.render(g);
 		}else if(state == STATE.WIN) {
 			win.render(g);
+		}else if(state == STATE.PAUSE) {
+			pause.render(g);
 		}
 		
 		
