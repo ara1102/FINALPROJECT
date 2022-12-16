@@ -12,7 +12,7 @@ public class Bullet extends GameObject implements EntityA{
 
 	public Bullet(double x, double y, Controller controller) {
 		
-		super(x+20,y-21);
+		super(x+15,y-21);
 		this.controller = controller;
 		
 		BufferedImageLoader loader = new BufferedImageLoader();
@@ -34,16 +34,9 @@ public class Bullet extends GameObject implements EntityA{
 		g.drawImage(bulletImg, (int)x, (int)y, null);
 	}
 	
-	public double getY() {
-		return y;
-	}
-
-	public double getX() {
-		return x;
-	}
-	
 	public Rectangle getBounds() {
 		return new Rectangle((int)x,(int)y, bulletImg.getWidth(), bulletImg.getHeight());
 	}
+
 }
 

@@ -30,8 +30,5 @@ public class Menu {
 		g.drawString("Help", helpButton.x+50, helpButton.y+65);
 		g.drawString("Quit", quitButton.x+50, quitButton.y+65);
 		
-		
-		
-		
 	}
 }

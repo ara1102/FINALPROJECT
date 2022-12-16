@@ -71,23 +71,7 @@ public class Enemy extends GameObject implements EntityB {
 	public void render(Graphics g) {
 		g.drawImage(enemyImg, (int)x, (int)y, null);
 	}
-	
-	public double getY() {
-		return y;
-	}
 
-	@Override
-	public double getX() {
-		return x;
-	}
-	
-	public void setY(int y) {
-		this.y = y;
-	}
-
-	public void setX(int x) {
-		this.x=x;
-	}
 	public Rectangle getBounds() {
 		return new Rectangle((int)x,(int)y, enemyImg.getWidth(),enemyImg.getHeight());
 	}

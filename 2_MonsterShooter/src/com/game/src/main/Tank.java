@@ -71,22 +71,6 @@ public class Tank extends GameObject implements EntityA{
 		g.drawImage(tankImg, (int)x, (int)y, null);
 	}
 	
-	public double getX() {
-		return x;
-	} 
-	
-	public double getY() {
-		return y;
-	}
-	
-	public void setX(double x) {
-		this.x = x;
-	}
-	
-	public void setY(double y) {
-		this.y = y;
-	}
-	
 	public void setvx(double vx) {
 		this.vx  = vx;
 	}
