@@ -21,13 +21,4 @@ public class Physics {
 		return false;
 	}
 	
-//	public static boolean Collision(EntityB entityB1, EntityB entityB2) {
-//
-//		if (entityB1 == entityB2) {
-//			if (entityB1.getBounds().intersects(entityB2.getBounds())) {
-//				return true;
-//			}
-//		}
-//		return false;
-//	}
 }

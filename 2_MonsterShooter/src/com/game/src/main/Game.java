@@ -8,9 +8,12 @@ import java.awt.Window;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.IllegalFormatCodePointException;
 import java.util.LinkedList;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JFrame;
 
 public class Game extends Canvas implements Runnable{
@@ -24,12 +27,10 @@ public class Game extends Canvas implements Runnable{
 	private GameOver gameOver;
 	private Win win;
 	private Pause pause;
+	private Help help;
 	
 	//Grass right-left area size : 70px each 
 	public static final int GRASS = 70;
-	private BufferedImage backImg = null;
-	//private String backPath = "/Arena.jpg";
-	private String backPath = "/Untitled design.png";
 	
 	public static enum STATE{
 		MENU,
@@ -37,7 +38,8 @@ public class Game extends Canvas implements Runnable{
 		DIFF,
 		GAMEOVER,
 		WIN,
-		PAUSE
+		PAUSE,
+		HELP
 	};
 	
 	public static enum DIFFICULTY{
@@ -52,21 +54,25 @@ public class Game extends Canvas implements Runnable{
 	
 	public void init() {
 		
-		BufferedImageLoader loader = new BufferedImageLoader();
-		backImg = loader.loadImage(backPath);
+		try {
+			AudioPlayer audioPlayer = new AudioPlayer();
+		} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+			System.out.println("sound error");
+			e.printStackTrace();
+		}
 		
 		menu = new Menu();
 		difficulty = new Difficulty();
 		gameOver = new GameOver();
 		win = new Win();
 		pause = new Pause();
+		help = new Help();
 		
 		controller = new Controller();
 		
 		requestFocus();
 		addKeyListener(new KeyboardPanel(controller.getTank(),controller));
-		addMouseListener(new MousePanel(menu,difficulty,gameOver,win,pause,controller));
-		
+		addMouseListener(new MousePanel(menu,difficulty,gameOver,win,pause,help,controller));
 	}
 	
 	public synchronized void start() {
@@ -138,10 +144,7 @@ public class Game extends Canvas implements Runnable{
 		
 		if(state == STATE.GAME && diff != DIFFICULTY.BASE) {
 			controller.tick();
-		}else if(state == STATE.MENU) {
-			//menu.tick();
 		}
-		
 		
 	}
 	
@@ -157,20 +160,31 @@ public class Game extends Canvas implements Runnable{
 		Graphics g = bs.getDrawGraphics();
 		/////////////////////////////////
 		
-		g.drawImage(backImg, 0, 0, null);
-		
-		if(state == STATE.DIFF) {
+		switch (state) {
+		case DIFF:
 			difficulty.render(g);
-		}else if(state == STATE.MENU) {
+			break;
+		case MENU:
 			menu.render(g);
-		}else if(state == STATE.GAME) {
+			break;
+		case GAME:
 			controller.render(g);
-		}else if(state == STATE.GAMEOVER) {
+			break;
+		case GAMEOVER:
 			gameOver.render(g);
-		}else if(state == STATE.WIN) {
+			break;
+		case WIN:
 			win.render(g);
-		}else if(state == STATE.PAUSE) {
+			break;
+		case PAUSE:
 			pause.render(g);
+			break;
+		case HELP:
+			help.render(g);
+			break;
+		default:
+			menu.render(g);
+			break;
 		}
 		
 		

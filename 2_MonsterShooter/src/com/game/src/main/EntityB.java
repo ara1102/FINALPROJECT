@@ -9,8 +9,4 @@ public interface EntityB {
 	public void render(Graphics g);
 	public Rectangle getBounds();
 	
-	public double getX();
-	public double getY();
-	public void setX(int x);
-	public void setY(int y);
 }

@@ -1,7 +1,9 @@
 package com.game.src.main;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
@@ -27,9 +29,13 @@ public class Controller extends JPanel {
 	private int spawn_killed = 0;
 	private int enemy_killed=0;
 	Random rand = new Random();
+	
+	private BufferedImage backImg = null;
+	private String backPath = "/Untitled design.png";
 
 	public Controller() {
-
+		BufferedImageLoader loader = new BufferedImageLoader();
+		backImg = loader.loadImage(backPath);
 	}
 
 	public void tick() {
@@ -66,11 +72,14 @@ public class Controller extends JPanel {
 
 	public void render(Graphics g) {
 
+		g.drawImage(backImg, 0, 0, null);
 		tank.render(g);
 		g.drawRect(10, 10, 50, 200);
 		g.setColor(Color.RED);
 		g.fillRect(10, 10, 50, tank.getHealth() * 2);
-		g.drawString(Integer.toString(enemy_killed), 400, 10);
+		Font font = new Font("InaiMathi", Font.BOLD,30);
+		g.setFont(font);
+		g.drawString(Integer.toString(enemy_killed), 440, 50);
 
 		for (int i = 0; i < entitiesA.size(); i++) {
 
@@ -157,6 +166,11 @@ public class Controller extends JPanel {
 		this.enemy_killed=0;
 		tank.reset();
 
+	}
+	
+	public void pause() {
+		tank.setvx(0);
+		tank.setvy(0);
 	}
 
 	public Tank getTank() {

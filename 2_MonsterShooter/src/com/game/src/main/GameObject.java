@@ -1,7 +1,5 @@
 package com.game.src.main;
 
-import java.awt.Rectangle;
-
 public class GameObject {
 
 	public double x,y;
@@ -11,8 +9,11 @@ public class GameObject {
 		this.y=y;
 	}
 	
-	public Rectangle getBounds(int width, int height) {
-		return new Rectangle((int)x,(int)y, width,height);
+	public double getX() {
+		return x;
+	}
+	public double getY() {
+		return y;
 	}
 	
 	public void setY(int y) {
