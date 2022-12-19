@@ -1,7 +1,5 @@
 package com.game.src.main;
 
-import java.util.LinkedList;
-
 public class Physics {
 
 	public static boolean Collision(EntityA entityA, EntityB entityB) {

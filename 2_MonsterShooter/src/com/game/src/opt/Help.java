@@ -1,4 +1,4 @@
-package com.game.src.main;
+package com.game.src.opt;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -6,6 +6,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+
+import com.game.src.loader.BufferedImageLoader;
 
 public class Help {
 

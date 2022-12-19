@@ -1,4 +1,4 @@
-package com.game.src.main;
+package com.game.src.loader;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,6 +10,7 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class AudioPlayer {
+	
 	// to store current position
     Long currentFrame;
     Clip clip;

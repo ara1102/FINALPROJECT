@@ -14,26 +14,33 @@ import java.util.TimerTask;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import com.game.src.loader.BufferedImageLoader;
 import com.game.src.main.Game.DIFFICULTY;
 import com.game.src.main.Game.STATE;
 
 public class Controller extends JPanel {
 
+	
 	private LinkedList<EntityA> entitiesA = new LinkedList<EntityA>();
 	private LinkedList<EntityB> entitiesB = new LinkedList<EntityB>();
-	private Tank tank = new Tank(218, 300, this);
-
-	EntityA entityA;
-	EntityB entityB;
+	
+	private Tank tank;
+	private EntityA entityA;
+	private EntityB entityB;
+	
 	private int spawn_count = 0;
 	private int spawn_killed = 0;
-	private int enemy_killed=0;
-	Random rand = new Random();
+	private int enemy_killed;
 	
-	private BufferedImage backImg = null;
+	private BufferedImage backImg;
 	private String backPath = "/Untitled design.png";
 
+	Random rand = new Random();
+	
 	public Controller() {
+		
+		tank = new Tank(218, 300, this);
+		
 		BufferedImageLoader loader = new BufferedImageLoader();
 		backImg = loader.loadImage(backPath);
 	}
@@ -73,10 +80,16 @@ public class Controller extends JPanel {
 	public void render(Graphics g) {
 
 		g.drawImage(backImg, 0, 0, null);
+		
 		tank.render(g);
-		g.drawRect(10, 10, 50, 200);
+		
+		// Health Bar
+		g.setColor(Color.white);
+		g.drawRect (10, 10, 50, 200);
 		g.setColor(Color.RED);
 		g.fillRect(10, 10, 50, tank.getHealth() * 2);
+		
+		// Number of enemies to be killed
 		Font font = new Font("InaiMathi", Font.BOLD,30);
 		g.setFont(font);
 		g.drawString(Integer.toString(enemy_killed), 440, 50);
@@ -94,48 +107,7 @@ public class Controller extends JPanel {
 		}
 
 	}
-
-	public void addEntity(EntityA e) {
-		entitiesA.add(e);
-	}
-
-	public void removeEntity(EntityA e) {
-		entitiesA.remove(e);
-	}
-
-	public void addEntity(EntityB e) {
-		entitiesB.add(e);
-	}
-
-	public void removeEntity(EntityB e) {
-		entitiesB.remove(e);
-		spawn_killed += 1;
-	}
 	
-	public void countKilled() {
-		enemy_killed--;
-	}
-
-	public LinkedList<EntityA> getEntitiesA() {
-		return entitiesA;
-	}
-
-	public LinkedList<EntityB> getEntitiesB() {
-		return entitiesB;
-	}
-
-	public EntityB getEntityB(int index) {
-		return entitiesB.get(index);
-	}
-
-	public int getEntitiesASize() {
-		return entitiesA.size();
-	}
-
-	public int getEntitiesBSize() {
-		return entitiesB.size();
-	}
-
 	public void start() {
 
 		if (Game.diff == DIFFICULTY.EASY) {
@@ -163,7 +135,7 @@ public class Controller extends JPanel {
 		entitiesB.removeAll(entitiesB);
 		this.spawn_count = 0;
 		this.spawn_killed = 0;
-		this.enemy_killed=0;
+		this.enemy_killed = -1;
 		tank.reset();
 
 	}
@@ -171,11 +143,6 @@ public class Controller extends JPanel {
 	public void pause() {
 		tank.setvx(0);
 		tank.setvy(0);
-	}
-
-	public Tank getTank() {
-		return tank;
-
 	}
 
 	public void addEnemy(int spawn_count) {
@@ -186,5 +153,48 @@ public class Controller extends JPanel {
 
 			this.spawn_count++;
 		}
+	}
+
+	public void addEntity(EntityA e) {
+		entitiesA.add(e);
+	}
+
+	public void removeEntity(EntityA e) {
+		entitiesA.remove(e);
+	}
+
+	public void addEntity(EntityB e) {
+		entitiesB.add(e);
+	}
+
+	public void removeEntity(EntityB e) {
+		entitiesB.remove(e);
+		spawn_killed += 1;
+	}
+	
+	public void countKilled() {
+		enemy_killed--;
+	}
+	
+	
+	// Getters
+	public Tank getTank() {
+		return tank;
+	}
+
+	public LinkedList<EntityA> getEntitiesA() {
+		return entitiesA;
+	}
+
+	public LinkedList<EntityB> getEntitiesB() {
+		return entitiesB;
+	}
+
+	public int getEntitiesASize() {
+		return entitiesA.size();
+	}
+
+	public int getEntitiesBSize() {
+		return entitiesB.size();
 	}
 }

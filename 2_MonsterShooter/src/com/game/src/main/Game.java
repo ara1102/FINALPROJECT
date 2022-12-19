@@ -16,6 +16,15 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JFrame;
 
+import com.game.src.listener.KeyboardPanel;
+import com.game.src.listener.MousePanel;
+import com.game.src.loader.AudioPlayer;
+import com.game.src.opt.Difficulty;
+import com.game.src.opt.GameOver;
+import com.game.src.opt.Help;
+import com.game.src.opt.Menu;
+import com.game.src.opt.Pause;
+
 public class Game extends Canvas implements Runnable{
 	
 	private boolean running = false;
@@ -54,6 +63,7 @@ public class Game extends Canvas implements Runnable{
 	
 	public void init() {
 		
+		// Audio Player Initialization
 		try {
 			AudioPlayer audioPlayer = new AudioPlayer();
 		} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
@@ -61,6 +71,7 @@ public class Game extends Canvas implements Runnable{
 			e.printStackTrace();
 		}
 		
+		// Menu Initialization
 		menu = new Menu();
 		difficulty = new Difficulty();
 		gameOver = new GameOver();
@@ -68,8 +79,11 @@ public class Game extends Canvas implements Runnable{
 		pause = new Pause();
 		help = new Help();
 		
+		
+		// Controller Initialization
 		controller = new Controller();
 		
+		// Key and Mouse Listener Initialization
 		requestFocus();
 		addKeyListener(new KeyboardPanel(controller.getTank(),controller));
 		addMouseListener(new MousePanel(menu,difficulty,gameOver,win,pause,help,controller));
@@ -96,8 +110,7 @@ public class Game extends Canvas implements Runnable{
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		System.exit(1);
-		
+		System.exit(1);	
 	}
 	
 	@Override
@@ -142,9 +155,8 @@ public class Game extends Canvas implements Runnable{
 	
 	private void tick() {
 		
-		if(state == STATE.GAME && diff != DIFFICULTY.BASE) {
+		if(state == STATE.GAME && diff != DIFFICULTY.BASE)
 			controller.tick();
-		}
 		
 	}
 	
@@ -187,12 +199,9 @@ public class Game extends Canvas implements Runnable{
 			break;
 		}
 		
-		
 		/////////////////////////////////
 		g.dispose();
 		bs.show();
 	}
-
-
 
 }

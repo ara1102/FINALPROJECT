@@ -7,19 +7,23 @@ import java.util.Random;
 
 import javax.swing.tree.FixedHeightLayoutCache;
 
+import com.game.src.loader.BufferedImageLoader;
 import com.game.src.main.Game.DIFFICULTY;
 
 public class Enemy extends GameObject implements EntityB {
 
 	private BufferedImage enemyImg;
 	private String enemyPath = "/spritesheet.png";
+	
 	private Random rand = new Random();
 	private Controller controller;
-	private int speed =0;
-	private int hp = 0;
-	private int attPoint = 0;
+	
+	private int speed =0; //Monster Speed
+	private int hp = 0;	//Monster Health Point
+	private int attPoint = 0;	//Monster Attack Point
 	
 	public Enemy(double x, double y, Controller controller) {
+		
 		super(x, y);
 		this.controller=controller;
 		
@@ -51,7 +55,7 @@ public class Enemy extends GameObject implements EntityB {
 			x = rand.nextInt(Main.WIDTH-Game.GRASS-Game.GRASS-64)+Game.GRASS;
 		}
 		
-		// Check Collision antara Enemy dan Bullet
+		// Check Collision between Enemy and Bullet
 		for(int i=0; i< controller.getEntitiesASize(); i++){
 			EntityA tempEntityA = controller.getEntitiesA().get(i);
 			
@@ -72,6 +76,7 @@ public class Enemy extends GameObject implements EntityB {
 		g.drawImage(enemyImg, (int)x, (int)y, null);
 	}
 
+	// Getters
 	public Rectangle getBounds() {
 		return new Rectangle((int)x,(int)y, enemyImg.getWidth(),enemyImg.getHeight());
 	}
