@@ -112,7 +112,7 @@ public class Controller extends JPanel {
 
 		if (Game.diff == DIFFICULTY.EASY) {
 
-			enemy_killed = 10;
+			enemy_killed = 200;
 			addEnemy(10);
 
 		} else if (Game.diff == DIFFICULTY.MEDIUM) {
@@ -122,8 +122,8 @@ public class Controller extends JPanel {
 
 		} else if (Game.diff == DIFFICULTY.HARD) {
 
-			enemy_killed = 40;
-			addEnemy(15);
+			enemy_killed = 100;
+			addEnemy(10);
 
 		}
 

@@ -36,13 +36,13 @@ public class Enemy extends GameObject implements EntityB {
 			attPoint = 10;
 		}else if(Game.diff == DIFFICULTY.MEDIUM) {
 			enemyImg = loader.loadImage(enemyPath, 255 ,170 , 58,64);
-			speed = 2;
-			hp = 2;
+			speed = 3;
+			hp = 3;
 			attPoint = 20;
 		}else if(Game.diff == DIFFICULTY.HARD) {
 			enemyImg = loader.loadImage(enemyPath, 507 ,170 , 58,64);
-			speed = 3;
-			hp = 2;
+			speed = 4;
+			hp = 3;
 			attPoint = 25;
 		}
 	}
